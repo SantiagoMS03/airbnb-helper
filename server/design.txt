@@ -1,0 +1,18 @@
+Booking
+    - Start date
+    - End date
+    - Guest number
+    - Turn off pool (boolean)
+    - Clean grill (boolean)
+    - Clean pet fur (boolean)
+    - (Reference to property)
+
+Cleaning Company
+    - Properties (Array of properties)
+    - Company name
+    - Password
+    - Email
+
+Property
+    - Address
+    - (Reference to cleaning company)
