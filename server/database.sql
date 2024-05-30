@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Booking (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     guest_number INT NOT NULL,
-    confirmation_code VARHAR(48) NOT NULL,
+    confirmation_code VARCHAR(48) NOT NULL,
     turn_off_pool BOOLEAN DEFAULT FALSE,
     clean_grill BOOLEAN DEFAULT FALSE,
     clean_pet_fur BOOLEAN DEFAULT FALSE,

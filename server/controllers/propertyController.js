@@ -81,6 +81,9 @@ const getBookingsForProperty = async (req, res) => {
     }
 };
 
+  
+
+
 module.exports = {
     getAllProperties,
     getPropertyById,
