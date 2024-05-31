@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Booking (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     guest_number INT NOT NULL,
-    confirmation_code VARCHAR(48) NOT NULL,
+    confirmation_code VARCHAR(48) NOT NULL UNIQUE,
     turn_off_pool BOOLEAN DEFAULT FALSE,
     clean_grill BOOLEAN DEFAULT FALSE,
     clean_pet_fur BOOLEAN DEFAULT FALSE,
@@ -44,7 +44,8 @@ INSERT INTO CleaningCompany (company_name) VALUES
 ('Techno Cleaning'),
 ('TJMM Cleaning'),
 ('VKL Cleaning'),
-('Zero Km Cleaning');
+('Zero Km Cleaning'),
+('Zenith Cleaning');
 
 -- Insert Properties for Escorcio Cleaning (cleaning_company_id = 1)
 INSERT INTO Property (address, bedrooms, property_type, cleaning_company_id) VALUES
@@ -113,3 +114,8 @@ INSERT INTO Property (address, bedrooms, property_type, cleaning_company_id) VAL
 INSERT INTO Property (address, bedrooms, property_type, cleaning_company_id) VALUES
 ('940 Park Tarrence Cir', 4, 'House', 9),
 ('409 Satsuma Ln', 3, 'House', 9);
+
+-- Insert Properties for Zenith Cleaning (cleaning_company_id = 10)
+INSERT INTO Property (address, bedrooms, property_type, cleaning_company_id) VALUES
+('1744 Lima Ave', 4, 'House', 10),
+('1506 Enclave', 3, 'Condo', 10);

@@ -10,7 +10,8 @@ function formatDate(dateStr) {
   return `${monthNames[dateParts[0]]}-${dateParts[1].replace(',', '')}-${dateParts[2]}`;
 }
 
-const parseTextContent = async function(text) {
+// const parseTextContent = async function(text) {
+const parseTextContent = async function(text, alt) {
   const lines = text.split('\n');
   let chunks = [];
   let currentChunk = [];
@@ -49,10 +50,10 @@ const parseTextContent = async function(text) {
   bookings = bookings.splice(1,bookings.length-2);
 
   for (let i = 0; i < bookings.length; i++) {
-    parsedBookings.push(await parseBookingString(bookings[i]));
+    // parsedBookings.push(await parseBookingString(bookings[i]));
+    alt.push(await parseBookingString(bookings[i]));
   }
-
-  return parsedBookings;
+  // return parsedBookings;
 }
 
 function isBooking(booking) {
@@ -64,13 +65,18 @@ function isBooking(booking) {
 }
 
 const getPropertyIdByPropertyNumber = async(propertyNumber) => {
+  console.log("here!")
   try {
     const properties = await pool.query('SELECT * FROM Property');
-    for (let property of properties.rows) {
+    for (let i = 0; i < properties.rows.length; i++) {
+      let property = properties.rows[i];
+      // console.log(property)
       if (property.address.includes(propertyNumber)) {
+        console.log("property number " + propertyNumber + ".")
         return property.property_id;
       }
     }
+    console.log("id not found in " + property.address)
   } catch (err) {
     console.error(err.message);
   }
@@ -82,19 +88,28 @@ function generateInsertQuery(parsedData) {
   }).join(', ');
 
   const query = `
-    INSERT INTO Booking (start_date, end_date, guest_number, property_id, confirmation_code)
+    INSERT INTO temp_bookings (start_date, end_date, guest_number, property_id, confirmation_code)
     VALUES ${values}
     RETURNING *;
   `;
-
   return query;
 }
 
 function parsePropertyNumber(propertyStrs) {
-  for (let subStr in propertyStrs) {
-    if (subStr.includes('#')) return subStr.replace('#', '').replace(/[a-zA-Z]/g, '')
+  let res = ''
+  // console.log("propertystrs is " + propertyStrs);
+  // for (let subStr in propertyStrs) {
+  for (let i = 0; i < propertyStrs.length; i++) {
+    let subStr = propertyStrs[i];
+    console.log("substr" + subStr);
+    console.log(subStr.includes('#'));
+    if (subStr.includes("#940")) res = "940";
+    else if (subStr.includes('#')) res = subStr.replace('#', '').replace(/[a-zA-Z]/g, '');
+    else if (subStr.includes('2613')) res = "2613"
+    else if (subStr.includes('409')) res = "409"
   }
-  return '';
+  console.log("\n\n\n" + res + "\n" + propertyStrs);
+  return res;
 }
 
 const parseBookingString = async function (bookingString) {
