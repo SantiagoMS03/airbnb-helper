@@ -1,13 +1,17 @@
-import React from 'react';
-import CompanyProperties from './components/CompanyProperties';
-import Admin from './pages/Admin';
+import React from "react";
+import CompanyProperties from "./components/CompanyProperties";
+import Admin from "./pages/Admin";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 
 const App = () => {
   return (
-    <div className="App">
-      <CompanyProperties companyId={9}/>
-      <Admin/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/properties/:companyId" element={<CompanyProperties />} />
+        {/* <Route path="/bookings/:companyId" element={<CompanyBookings />} /> */}
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
