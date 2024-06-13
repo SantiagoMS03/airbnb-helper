@@ -59,6 +59,7 @@ export const deleteProperty = async (id) => {
   }
 };
 
+// Returns an array of bookings
 export const getBookingsForProperty = async (id) => {
   console.log("id is " + id);
   try {
@@ -69,12 +70,17 @@ export const getBookingsForProperty = async (id) => {
     console.log("hi here");
     const response = [];
     for (let i = 0; i < bookings.data.length; i++) {
+      console.log("iterating over booking...");
+      console.log(bookings.data[i]);
       response.push(bookings.data[i]);
+      console.log("response now is...");
+      console.log(response);
     }
     console.log("response is ...");
     console.log(response);
     console.log("yay");
-    return response.data;
+
+    return response;
   } catch (error) {
     console.error(`Error fetching bookings for property with id ${id}:`, error);
     throw error;
@@ -95,14 +101,20 @@ export const getBookingsAndPropertiesForCompany = async (companyId) => {
   }
 };
 
+// Returns array of bookings
 export const getBookingsForProperties = async (properties) => {
   let response = [];
   for (let property of properties) {
     const bookings = await getBookingsForProperty(property.property_id);
+    console.log("bookings are...");
+    console.log(bookings);
     for (let i = 0; bookings && i < bookings.length; i++) {
-      response.push(booking.data);
+      // response.push(booking.data);
+      response.push(bookings[i]);
     }
   }
+  console.log("returning...");
+  console.log(response);
   return response;
 };
 
